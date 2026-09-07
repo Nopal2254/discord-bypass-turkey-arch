@@ -1,0 +1,6 @@
+table ip discordredirect {
+	chain output {
+		type nat hook output priority dstnat;
+		meta skgid discordnet tcp dport 443 redirect to :1085
+	}
+}

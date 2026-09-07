@@ -1,0 +1,15 @@
+#!/bin/bash
+# Launches Discord under the discordnet group so its traffic is transparently
+# redirected (via nftables) through ciadpi's DPI-bypass proxy, without
+# touching any other application's network traffic.
+#
+# Uses newgrp (not sudo -g) because newgrp preserves the rest of the user's
+# supplementary groups (video, input, etc.), which sudo -g would otherwise
+# replace wholesale, breaking GPU/audio access for the launched app.
+{
+  printf 'exec /usr/bin/discord --url --'
+  for a in "$@"; do
+    printf ' %q' "$a"
+  done
+  printf '\n'
+} | newgrp discordnet

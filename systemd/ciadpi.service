@@ -1,0 +1,12 @@
+[Unit]
+Description=ByeDPI (ciadpi) transparent DPI-bypass proxy for Discord
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/opt/discord-bypass/ciadpi-x86_64 -p 1085 -I 0.0.0.0 -E --split 1 --disorder 3+s --mod-http h,d --auto torst --tlsrec 1+s
+Restart=on-failure
+RestartSec=2
+
+[Install]
+WantedBy=multi-user.target

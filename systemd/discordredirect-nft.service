@@ -1,0 +1,13 @@
+[Unit]
+Description=Redirect discordnet group HTTPS traffic to ciadpi (ByeDPI) for DPI bypass
+After=network.target ciadpi.service
+Requires=ciadpi.service
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/usr/bin/nft -f /etc/discordredirect.nft
+ExecStop=/usr/bin/nft delete table ip discordredirect
+
+[Install]
+WantedBy=multi-user.target
